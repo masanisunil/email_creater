@@ -1,0 +1,36 @@
+[project]
+name = "email-sender"
+version = "0.1.0"
+description = "Human-approved email agent with durable state and guarded SMTP delivery"
+readme = "README.md"
+authors = [
+    { name = "Sunil Masani", email = "all02770@adobe.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "langchain>=1.4.3,<2",
+    "langgraph>=1.2.12,<2",
+    "langgraph-checkpoint-sqlite>=3,<4",
+    "python-dotenv>=1.2.4,<2",
+    "langchain-groq>=1.1.3,<2",
+    "pydantic[email]>=2.13.5,<3",
+    "streamlit>=1.38"
+]
+
+[project.scripts]
+email-sender = "email_sender:main"
+
+[dependency-groups]
+dev = ["ruff>=0.14,<1"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+
+[tool.ruff.lint.per-file-ignores]
+"agent.py" = ["E402"]
+"email_send.py" = ["E402"]
+"tests/*.py" = ["E402"]
+
+[build-system]
+requires = ["uv_build>=0.12.22,<0.13.0"]
+build-backend = "uv_build"

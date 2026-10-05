@@ -1,0 +1,35 @@
+services:
+  email-sender:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - email_data:/app/.email-sender
+    expose:
+      - "8501"
+    networks:
+      - web
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - web
+    depends_on:
+      - email-sender
+
+volumes:
+  email_data:
+  caddy_data:
+  caddy_config:
+
+networks:
+  web:
