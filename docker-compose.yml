@@ -6,8 +6,8 @@ services:
       - .env
     volumes:
       - email_data:/app/.email-sender
-    ports:
-      - "8501:8501"
+    expose:
+      - "8501"
     networks:
       - web
 
